@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07100b">
+  <meta name="description" content="NOVA Studio — a browser-based video maker for your own photos, clips, titles and music.">
+  <title>NOVA VIDEO AI — Studio</title>
+  <style>
+    :root{color-scheme:dark;--bg:#070b08;--panel:#101913;--panel2:#0c130e;--line:#24372b;--text:#edf8f0;--muted:#91a498;--green:#67e69a;--green2:#21b965;--gold:#e7c77b;--shadow:0 18px 55px #0008}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+    .app{min-height:100vh;background:radial-gradient(ellipse at 72% -20%,#123a2466,transparent 45%),var(--bg)}
+    .topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;border-bottom:1px solid #1e2b22;background:#080e0aeb;position:sticky;top:0;z-index:10;backdrop-filter:blur(14px)}
+    .brand{display:flex;align-items:center;gap:12px}.mark{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#8dffb7,#0e9b50);color:#04130a;display:grid;place-items:center;font-weight:950;font-size:21px;box-shadow:0 7px 25px #1bc66a38}.brand-name{font-size:14px;letter-spacing:.18em;font-weight:900}.brand-name span{color:var(--green)}.subbrand{font-size:9px;color:#7e9385;letter-spacing:.2em;margin-top:3px}.top-right{display:flex;align-items:center;gap:14px}.status{font-size:11px;color:#b8e9c7;border:1px solid #2b553b;background:#102319;padding:8px 11px;border-radius:999px}.status:before{content:"";display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;margin-right:7px;box-shadow:0 0 11px var(--green)}
+    .layout{display:grid;grid-template-columns:210px minmax(0,1fr);max-width:1600px;margin:0 auto;min-height:calc(100vh - 72px)}.sidebar{border-right:1px solid #1d2b21;padding:24px 14px;background:#090f0b}.nav-label{font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:#6f8577;padding:10px 12px}.nav-btn{width:100%;border:1px solid transparent;color:#99ac9f;background:transparent;border-radius:10px;text-align:left;padding:12px;font-size:12px;margin:2px 0;transition:.18s}.nav-btn:hover{background:#142219;color:white}.nav-btn.active{background:linear-gradient(100deg,#173b27,#10251a);border-color:#2e6a43;color:#d5ffe0}.sidebar-note{margin:30px 4px 0;padding:14px;border-radius:13px;border:1px solid #263b2c;background:linear-gradient(145deg,#142319,#0b120d);font-size:11px;line-height:1.55;color:#91a698}.sidebar-note strong{color:var(--green);display:block;margin-bottom:5px}
+    main{padding:30px clamp(16px,3vw,42px) 60px;min-width:0}.page{display:none}.page.active{display:block}.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:25px}.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--green);text-transform:uppercase;font-weight:800}.page-title{font-size:clamp(25px,3vw,36px);font-weight:760;letter-spacing:-.04em;margin:7px 0 6px}.page-desc{font-size:13px;color:var(--muted);line-height:1.5}.tag{font-size:10px;border:1px solid #2b4032;padding:8px 10px;border-radius:8px;color:#9db3a3;white-space:nowrap}
+    .studio-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(310px,.88fr);gap:18px;align-items:start}.panel{background:linear-gradient(145deg,#111b14,#0b120e);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.editor{padding:20px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}.section-title{font-weight:700;font-size:14px}.helper{font-size:10px;color:#829789}.field-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:#91a697;font-weight:750;margin:17px 0 8px}.text-field,.select-field{width:100%;background:#080f0a;border:1px solid #2b4032;border-radius:10px;color:#effbf2;padding:12px 13px;font-size:12px}.text-field::placeholder{color:#5f7566}.text-field:focus,.select-field:focus{border-color:#54d887;outline:none;box-shadow:0 0 0 3px #54d88718}.textarea{resize:vertical;min-height:88px;line-height:1.55}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}.upload{border:1px dashed #41624a;background:#0b140e;border-radius:12px;padding:17px;text-align:center;display:block;color:#b6c9bc;transition:.2s}.upload:hover{border-color:var(--green);background:#102016}.upload input{display:none}.upload-icon{font-size:22px;color:var(--green);margin-bottom:7px}.upload strong{font-size:12px;display:block}.upload small{display:block;font-size:10px;color:#7d9384;margin-top:5px}.asset-list{display:grid;gap:8px;margin-top:11px}.asset{display:flex;align-items:center;gap:10px;background:#0a100c;border:1px solid #26392c;padding:8px;border-radius:10px}.asset-thumb{width:48px;height:38px;object-fit:cover;border-radius:6px;background:#132219}.asset-info{min-width:0;flex:1}.asset-name{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.asset-type{font-size:9px;color:#819487;margin-top:3px}.remove{border:1px solid #3a3d2e;background:#171a12;color:#d6b875;border-radius:7px;padding:6px 8px;font-size:10px}.remove:hover{border-color:#b77c50;color:#ffd2aa}.segmented{display:flex;gap:7px;flex-wrap:wrap}.choice{border:1px solid #2b4033;background:#0b130e;color:#adc0b3;border-radius:9px;padding:9px 12px;font-size:11px;transition:.18s}.choice:hover{border-color:#4e9e69}.choice.selected{background:#153b26;border-color:#3ab96c;color:#d5ffe1;box-shadow:inset 0 0 0 1px #3ab96c25}.primary{border:0;background:linear-gradient(100deg,#159b50,#60e896);color:#04150a;font-weight:850;border-radius:11px;padding:13px 18px;font-size:12px;box-shadow:0 9px 25px #1bc66a30}.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}.primary:disabled{opacity:.55;cursor:not-allowed;transform:none}.secondary{border:1px solid #324b39;background:#111b14;color:#b9cfbf;padding:11px 14px;border-radius:10px;font-size:11px}.secondary:hover{border-color:#5aba7c;color:white}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding-top:17px;border-top:1px solid #24352a}.hint{font-size:10px;color:#819588;line-height:1.5}.preview-panel{padding:16px}.preview-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.canvas-wrap{border:1px solid #294331;background:#07100a;border-radius:13px;overflow:hidden;display:flex;justify-content:center;align-items:center;min-height:260px;padding:12px}.preview-canvas{max-width:100%;max-height:520px;width:auto;height:auto;border-radius:7px;background:#0d1b12;box-shadow:0 10px 30px #0009}.preview-meta{display:flex;justify-content:space-between;color:#829588;font-size:10px;margin-top:11px}.preview-actions{display:flex;gap:8px;margin-top:14px}.preview-actions button{flex:1}.callout{margin-top:13px;padding:12px;border:1px solid #51452b;border-radius:11px;background:#1c1a10;color:#d9c991;font-size:10px;line-height:1.55}.callout strong{color:#f3d990}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.feature{border:1px solid #26392c;border-radius:11px;padding:12px;background:#0a120c}.feature b{font-size:11px;display:block;margin-bottom:4px}.feature span{font-size:9px;color:#829588;line-height:1.4;display:block}
+    .empty{padding:45px 20px;text-align:center;color:#8da294}.empty-icon{font-size:30px;color:var(--green);margin-bottom:13px}.history-list{display:grid;gap:12px}.history-card{padding:13px;display:flex;align-items:center;gap:14px}.history-preview{width:75px;height:62px;background:radial-gradient(circle at 50% 45%,#276c45,#0a140e 70%);border-radius:9px;display:grid;place-items:center;color:#9bffc0;font-size:22px;flex:none}.history-details{min-width:0;flex:1}.history-details strong{font-size:12px}.history-details p{font-size:10px;color:#84988a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:5px 0}.history-details small{font-size:9px;color:var(--green)}.history-card button{font-size:10px}.settings-card{padding:20px;margin-bottom:13px}.settings-row{display:flex;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid #223329;font-size:12px}.settings-row:last-child{border:0}.settings-row span{color:#8ea295;text-align:right}.footer{border-top:1px solid #1d2b21;padding:17px;text-align:center;font-size:9px;letter-spacing:.12em;color:#62766a}
+    @media(max-width:940px){.studio-grid{grid-template-columns:1fr}.preview-panel{max-width:640px}.preview-canvas{max-height:460px}}
+    @media(max-width:680px){.layout{grid-template-columns:1fr}.sidebar{position:sticky;top:72px;z-index:8;border-right:0;border-bottom:1px solid #1d2b21;padding:7px 10px;display:flex;gap:5px;overflow-x:auto}.nav-label,.sidebar-note{display:none}.nav-btn{white-space:nowrap;width:auto;min-width:max-content;padding:10px}.topbar{padding:0 14px}.top-right .status{font-size:9px}main{padding:22px 13px 45px}.page-head{align-items:flex-start;flex-direction:column}.editor{padding:15px}.feature-grid{grid-template-columns:1fr}.row{flex-direction:column}.toolbar{align-items:flex-start;flex-direction:column}.toolbar button{width:100%}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="mark">N</div><div><div class="brand-name">NOVA <span>VIDEO AI</span></div><div class="subbrand">CREATIVE VIDEO STUDIO</div></div></div>
+    <div class="top-right"><span class="status">BROWSER STUDIO</span></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav-label">Workspace</div>
+      <button class="nav-btn active" data-page="studio">✦ &nbsp; Video studio</button>
+      <button class="nav-btn" data-page="exports">▤ &nbsp; My exports</button>
+      <button class="nav-btn" data-page="assets">▧ &nbsp; Media assets</button>
+      <div class="nav-label" style="margin-top:18px">Preferences</div>
+      <button class="nav-btn" data-page="settings">⚙ &nbsp; Settings</button>
+      <div class="sidebar-note"><strong>NOVA Studio</strong>Create actual WebM videos from your own photos, clips, text and optional music. Your media stays in your browser while you work.</div>
+    </aside>
+    <main>
+      <section class="page active" id="page-studio">
+        <div class="page-head"><div><div class="eyebrow">Your creative workspace</div><h1 class="page-title">Make your next <span style="color:var(--green)">moment.</span></h1><p class="page-desc">Build a video from your own media, add a title and soundtrack, then export it.</p></div><span class="tag">NO ACCOUNT · NO API KEY</span></div>
+        <div class="studio-grid">
+          <div class="panel editor">
+            <div class="panel-head"><div class="section-title">01 &nbsp; Build your video</div><span class="helper">Your files stay on this device</span></div>
+            <label class="field-label" for="media-input" style="margin-top:0">Add photos or video clips</label>
+            <label class="upload" for="media-input"><div class="upload-icon">＋</div><strong>Choose media files</strong><small>JPG, PNG, WEBP, MP4, WEBM · Add multiple files</small><input id="media-input" type="file" accept="image/*,video/mp4,video/webm,video/ogg" multiple></label>
+            <div class="asset-list" id="selected-assets"><div class="hint">No media selected yet. You can also export a motion-title video without uploads.</div></div>
+            <label class="field-label" for="title-input">Main title</label><input class="text-field" id="title-input" maxlength="70" placeholder="A story worth watching" value="A story worth watching">
+            <label class="field-label" for="subtitle-input">Subtitle / caption</label><textarea class="text-field textarea" id="subtitle-input" maxlength="180" placeholder="Add a short line to set the mood...">Created with NOVA Studio</textarea>
+            <div class="row"><div><label class="field-label" for="duration-select">Video length</label><select class="select-field" id="duration-select"><option value="10">10 seconds</option><option value="15" selected>15 seconds</option><option value="20">20 seconds</option><option value="30">30 seconds</option></select></div><div><label class="field-label" for="ratio-select">Aspect ratio</label><select class="select-field" id="ratio-select"><option value="portrait" selected>9:16 · Shorts</option><option value="landscape">16:9 · YouTube</option><option value="square">1:1 · Square</option></select></div></div>
+            <label class="field-label">Motion style</label><div class="segmented" id="motion-options"><button class="choice selected" data-value="zoom">Slow cinematic zoom</button><button class="choice" data-value="pan">Gentle pan</button><button class="choice" data-value="none">Still / clean</button></div>
+            <div class="row"><div><label class="field-label" for="position-select">Text position</label><select class="select-field" id="position-select"><option value="bottom" selected>Bottom</option><option value="middle">Middle</option><option value="top">Top</option></select></div><div><label class="field-label" for="music-input">Background music</label><input class="text-field" id="music-input" type="file" accept="audio/*" style="padding:9px;font-size:10px"></div></div>
+            <div class="toolbar"><div class="hint">Export format: WebM · 720p canvas · 30 FPS<br>Recommended browser: latest Chrome or Edge desktop.</div><button class="primary" id="export-btn">✦ &nbsp; Render &amp; export video</button></div>
+            <div class="hint" id="render-status" role="status" aria-live="polite" style="margin-top:12px">Ready when you are. Preview updates as you edit.</div>
+          </div>
+          <div>
+            <div class="panel preview-panel">
+              <div class="preview-head"><div class="section-title">Live canvas</div><span class="helper">PREVIEW</span></div>
+              <div class="canvas-wrap"><canvas id="preview-canvas" class="preview-canvas" width="405" height="720" aria-label="Video preview"></canvas></div>
+              <div class="preview-meta"><span id="preview-ratio">Portrait · 9:16</span><span id="preview-time">15 sec · 30 FPS</span></div>
+              <div class="preview-actions"><button class="secondary" id="preview-play">▶ &nbsp; Play preview</button><button class="secondary" id="preview-reset">↺ &nbsp; Reset</button></div>
+            </div>
+            <div class="feature-grid"><div class="feature"><b>01 · Your media</b><span>Mix photos and clips in one sequence.</span></div><div class="feature"><b>02 · Your style</b><span>Add titles, movement and music.</span></div><div class="feature"><b>03 · Export</b><span>Download a real WebM video file.</span></div></div>
+            <div class="callout"><strong>What this version does:</strong> it creates and downloads an actual video using media you provide, plus motion graphics. It does not invent new AI scenes from a text prompt. That needs a separate age-eligible AI provider and an authorized backend.</div>
+          </div>
+        </div>
+      </section>
+      <section class="page" id="page-exports"><div class="page-head"><div><div class="eyebrow">Your creations</div><h1 class="page-title">My exports</h1><p class="page-desc">Recent video renders from this browser.</p></div></div><div class="history-list" id="export-list"><div class="panel empty"><div class="empty-icon">▤</div><strong>No exports yet</strong><p class="page-desc">Your completed renders will appear here.</p></div></div></section>
+      <section class="page" id="page-assets"><div class="page-head"><div><div class="eyebrow">Your media collection</div><h1 class="page-title">Media assets</h1><p class="page-desc">Files loaded into the current editing session.</p></div></div><div class="panel editor"><div class="asset-list" id="asset-library"><div class="empty"><div class="empty-icon">▧</div><strong>No assets added</strong><p class="page-desc">Add photos or clips in Video studio.</p></div></div></div></section>
+      <section class="page" id="page-settings"><div class="page-head"><div><div class="eyebrow">Workspace preferences</div><h1 class="page-title">Settings</h1><p class="page-desc">About this version of NOVA.</p></div></div><div class="panel settings-card"><div class="settings-row"><strong>Studio mode</strong><span>Browser-based video maker</span></div><div class="settings-row"><strong>Rendering</strong><span>Canvas + MediaRecorder</span></div><div class="settings-row"><strong>Output</strong><span>WebM video, 30 FPS</span></div><div class="settings-row"><strong>Storage</strong><span>Files remain in this browser session</span></div><div class="settings-row"><strong>External AI service</strong><span>Not connected</span></div></div><div class="callout"><strong>Privacy:</strong> this static version does not upload your selected files to a server. The video is composed in your browser and downloaded to your device. If you publish this site, anyone with the link can use the public interface; do not place private files in the public repository.</div></section>
+    </main>
+  </div>
+  <footer class="footer">NOVA VIDEO AI · BROWSER-BASED CREATIVE STUDIO</footer>
+</div>
+<script>
+(() => {
+  'use strict';
+  const $ = (selector) => document.querySelector(selector);
+  const canvas = $('#preview-canvas');
+  const ctx = canvas.getContext('2d');
+  const mediaInput = $('#media-input');
+  const titleInput = $('#title-input');
+  const subtitleInput = $('#subtitle-input');
+  const durationSelect = $('#duration-select');
+  const ratioSelect = $('#ratio-select');
+  const positionSelect = $('#position-select');
+  const musicInput = $('#music-input');
+  const exportButton = $('#export-btn');
+  const statusLine = $('#render-status');
+  const state = { assets: [], motion: 'zoom', raf: 0, previewStart: 0, previewing: false, exports: [], currentFrame: 0 };
+  const W = { portrait: 720, landscape: 1280, square: 900 };
+  const H = { portrait: 1280, landscape: 720, square: 900 };
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const escapeHTML = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function selectedRatio(){ return ratioSelect.value; }
+  function seconds(){ return Number(durationSelect.value); }
+  function setCanvasDimensions(target=canvas){ const ratio=selectedRatio(); const w=W[ratio],h=H[ratio]; if(target.width!==w||target.height!==h){target.width=w;target.height=h;} }
+  function assetName(file){return file.name.length>28?file.name.slice(0,25)+'…':file.name;}
+  function createAsset(file){
+    const url=URL.createObjectURL(file); const video=file.type.startsWith('video/');
+    const asset={file,url,video,element:null,ready:false};
+    if(video){const el=document.createElement('video');el.src=url;el.muted=true;el.loop=true;el.playsInline=true;el.preload='auto';el.addEventListener('loadeddata',()=>{asset.ready=true;drawPreview();});asset.element=el;}
+    else {const img=new Image();img.onload=()=>{asset.ready=true;drawPreview();};img.src=url;asset.element=img;}
+    return asset;
+  }
+  function renderAssets(){
+    const target=$('#selected-assets'); const library=$('#asset-library');
+    if(!state.assets.length){target.innerHTML='<div class="hint">No media selected yet. You can also export a motion-title video without uploads.</div>';library.innerHTML='<div class="empty"><div class="empty-icon">▧</div><strong>No assets added</strong><p class="page-desc">Add photos or clips in Video studio.</p></div>';return;}
+    const html=state.assets.map((a,i)=>`<div class="asset"><div class="asset-thumb" style="display:grid;place-items:center">${a.video?'▶':'▧'}</div><div class="asset-info"><div class="asset-name">${escapeHTML(assetName(a.file))}</div><div class="asset-type">${a.video?'VIDEO CLIP':'IMAGE'} · ${Math.max(1,Math.round(a.file.size/1024))} KB</div></div><button class="remove" data-remove="${i}" aria-label="Remove ${escapeHTML(a.file.name)}">Remove</button></div>`).join('');
+    target.innerHTML=html;library.innerHTML=html;
+    document.querySelectorAll('[data-remove]').forEach(btn=>btn.addEventListener('click',()=>{const i=Number(btn.dataset.remove);const [a]=state.assets.splice(i,1);if(a){URL.revokeObjectURL(a.url);if(a.video)a.element.pause();}renderAssets();drawPreview();}));
+  }
+  mediaInput.addEventListener('change',()=>{const files=[...mediaInput.files];for(const file of files){if(!file.type.startsWith('image/')&&!file.type.startsWith('video/'))continue;if(file.size>150*1024*1024){statusLine.textContent=`Skipped ${file.name}: file is larger than 150 MB.`;continue;}state.assets.push(createAsset(file));}renderAssets();mediaInput.value='';drawPreview();});
+  $('#motion-options').addEventListener('click',e=>{const b=e.target.closest('button[data-value]');if(!b)return;state.motion=b.dataset.value;$('#motion-options').querySelectorAll('.choice').forEach(x=>x.classList.toggle('selected',x===b));drawPreview();});
+  [titleInput,subtitleInput,durationSelect,ratioSelect,positionSelect].forEach(el=>el.addEventListener('input',()=>{drawPreview();updateMeta();}));
+  function updateMeta(){const r=selectedRatio();$('#preview-ratio').textContent=(r==='portrait'?'Portrait · 9:16':r==='landscape'?'Landscape · 16:9':'Square · 1:1');$('#preview-time').textContent=`${seconds()} sec · 30 FPS`;}
+  function drawCover(source,x,y,w,h,progress=0){
+    const sw=source.videoWidth||source.naturalWidth||source.width,sh=source.videoHeight||source.naturalHeight||source.height;
+    if(!sw||!sh)return;
+    let scale=Math.max(w/sw,h/sh);if(state.motion==='zoom')scale*=1+0.10*progress;
+    const dw=sw*scale,dh=sh*scale;let dx=x+(w-dw)/2,dy=y+(h-dh)/2;
+    if(state.motion==='pan'){dx+=Math.sin(progress*Math.PI*2)*w*.045;dy+=Math.cos(progress*Math.PI*2)*h*.025;}
+    ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.drawImage(source,dx,dy,dw,dh);ctx.restore();
+  }
+  function drawFrame(target,elapsed=0){
+    const c=target.getContext('2d');const old=ctx;
+    // Drawing helpers intentionally use the currently selected canvas context.
+    if(target!==canvas){
+      const copy=canvas;
+      const tw=target.width,th=target.height;
+      const r=selectedRatio();
+      // Re-render on the recording canvas using its own context.
+      drawFrameOn(target,elapsed);
+      return;
+    }
+    drawFrameOn(target,elapsed);
+  }
+  function drawFrameOn(target,elapsed){
+    const c=target.getContext('2d');const w=target.width,h=target.height;const total=seconds();const sceneDuration=state.assets.length?total/state.assets.length:total;const idx=state.assets.length?Math.min(state.assets.length-1,Math.floor(elapsed/sceneDuration)):0;const local=state.assets.length?(elapsed-idx*sceneDuration)/sceneDuration:elapsed/total;const asset=state.assets[idx];
+    const oldCtx=ctx;
+    // Draw to any canvas without changing the live editor's context.
+    const background=c.createLinearGradient(0,0,w,h);background.addColorStop(0,'#173f2a');background.addColorStop(.48,'#0b1b12');background.addColorStop(1,'#040806');c.fillStyle=background;c.fillRect(0,0,w,h);
+    if(asset&&asset.ready&&asset.element){
+      const source=asset.element;const sw=source.videoWidth||source.naturalWidth,sh=source.videoHeight||source.naturalHeight;
+      if(sw&&sh){let scale=Math.max(w/sw,h/sh);if(state.motion==='zoom')scale*=1+.12*clamp(local,0,1);const dw=sw*scale,dh=sh*scale;let dx=(w-dw)/2,dy=(h-dh)/2;if(state.motion==='pan'){dx+=Math.sin(local*Math.PI*2)*w*.04;dy+=Math.cos(local*Math.PI*2)*h*.022;}c.save();c.beginPath();c.rect(0,0,w,h);c.clip();try{c.drawImage(source,dx,dy,dw,dh);}catch{}c.restore();}
+    }else{
+      const t=elapsed;const cx=w*(.5+Math.sin(t*.45)*.08),cy=h*(.45+Math.cos(t*.34)*.07);const r=c.createRadialGradient(cx,cy,10,cx,cy,Math.max(w,h)*.75);r.addColorStop(0,'#328957');r.addColorStop(.45,'#163d29');r.addColorStop(1,'#050a07');c.fillStyle=r;c.fillRect(0,0,w,h);
+      c.save();c.translate(cx,cy);c.rotate(t*.025);c.strokeStyle='#a1ffc033';c.lineWidth=Math.max(1,w*.0015);for(let i=0;i<5;i++){c.beginPath();c.ellipse(0,0,w*(.16+i*.09),h*(.09+i*.06),i*.22,0,Math.PI*2);c.stroke();}c.restore();
+    }
+    const overlay=c.createLinearGradient(0,0,0,h);overlay.addColorStop(0,'#02080512');overlay.addColorStop(.48,'#02080508');overlay.addColorStop(1,'#020805df');c.fillStyle=overlay;c.fillRect(0,0,w,h);
+    const title=titleInput.value.trim();const subtitle=subtitleInput.value.trim();const position=positionSelect.value;let y=position==='top'?h*.19:position==='middle'?h*.51:h*.76;
+    c.textAlign='center';c.textBaseline='middle';c.shadowColor='#000b';c.shadowBlur=w*.018;c.fillStyle='#f4fff7';
+    const maxWidth=w*.82;let fontSize=Math.round(w*.075);c.font=`800 ${fontSize}px Inter, system-ui, sans-serif`;while(title&&c.measureText(title).width>maxWidth&&fontSize>w*.035){fontSize-=2;c.font=`800 ${fontSize}px Inter, system-ui, sans-serif`;}
+    if(title){wrapText(c,title,w/2,y,maxWidth,fontSize*1.2,3);}
+    if(subtitle){c.shadowBlur=w*.01;c.fillStyle='#d4f2dd';c.font=`500 ${Math.round(w*.027)}px Inter, system-ui, sans-serif`;wrapText(c,subtitle,w/2,y+fontSize*1.9,maxWidth,Math.round(w*.039),2);}
+    c.shadowBlur=0;c.fillStyle='#b5e9c7';c.font=`700 ${Math.round(w*.018)}px Inter, system-ui, sans-serif`;c.fillText('NOVA STUDIO',w/2,h*.94);
+    if(target===canvas){$('#preview-time').textContent=`${Math.min(total,Math.max(0,elapsed)).toFixed(1)} / ${total} sec`}
+  }
+  function wrapText(c,text,x,y,maxWidth,lineHeight,maxLines){const words=text.split(/\s+/);let line='',lines=[];for(const word of words){const test=line?line+' '+word:word;if(c.measureText(test).width>maxWidth&&line){lines.push(line);line=word;}else line=test;}if(line)lines.push(line);lines=lines.slice(0,maxLines);const start=y-((lines.length-1)*lineHeight)/2;lines.forEach((item,i)=>c.fillText(item,x,start+i*lineHeight,maxWidth));}
+  function drawPreview(){setCanvasDimensions();drawFrameOn(canvas,0);updateMeta();}
+  drawPreview();
+  function stopPreview(){state.previewing=false;if(state.raf)cancelAnimationFrame(state.raf);state.raf=0;state.assets.forEach(a=>{if(a.video)a.element.pause();});$('#preview-play').textContent='▶  Play preview';}
+  $('#preview-play').addEventListener('click',()=>{if(state.previewing){stopPreview();return;}state.previewing=true;state.previewStart=performance.now();$('#preview-play').textContent='Ⅱ  Pause preview';const tick=now=>{if(!state.previewing)return;const elapsed=((now-state.previewStart)/1000)%seconds();drawFrameOn(canvas,elapsed);const duration=state.assets.length?seconds()/state.assets.length:seconds();const idx=state.assets.length?Math.min(state.assets.length-1,Math.floor(elapsed/duration)):-1;state.assets.forEach((a,i)=>{if(!a.video)return;if(i===idx){if(a.element.paused)a.element.play().catch(()=>{});}else if(!a.element.paused)a.element.pause();});state.raf=requestAnimationFrame(tick);};state.raf=requestAnimationFrame(tick);});
+  $('#preview-reset').addEventListener('click',()=>{stopPreview();drawPreview();});
+  async function prepareMusic(stream){const file=musicInput.files?.[0];if(!file)return null;const audio=new Audio();audio.src=URL.createObjectURL(file);audio.loop=true;audio.preload='auto';const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;const ac=new AC();await ac.resume();const source=ac.createMediaElementSource(audio);const destination=ac.createMediaStreamDestination();source.connect(destination);source.connect(ac.destination);await audio.play();for(const track of destination.stream.getAudioTracks())stream.addTrack(track);return {audio,ac,url:audio.src};}
+  function chooseMime(){const types=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];return types.find(t=>MediaRecorder.isTypeSupported(t))||'';}
+  async function exportVideo(){
+    if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){statusLine.textContent='This browser cannot export canvas videos. Try the latest Chrome or Edge on desktop.';return;}
+    stopPreview();exportButton.disabled=true;exportButton.textContent='Rendering…';statusLine.textContent='Preparing video… keep this tab open until the download starts.';
+    const ratio=selectedRatio(),out=document.createElement('canvas');out.width=W[ratio];out.height=H[ratio];const stream=out.captureStream(30);let music=null;let recorder;const chunks=[];let finishTimer;
+    try{
+      music=await prepareMusic(stream);
+      const mime=chooseMime();recorder=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:6500000}:undefined);
+      recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+      const ended=new Promise((resolve,reject)=>{recorder.onerror=e=>reject(e.error||new Error('Recording failed'));recorder.onstop=resolve;});
+      recorder.start(500);
+      const total=seconds();const start=performance.now();let previousIndex=-1;
+      const frame=now=>{
+        const elapsed=(now-start)/1000;const t=Math.min(total,elapsed);const sceneDuration=state.assets.length?total/state.assets.length:total;const idx=state.assets.length?Math.min(state.assets.length-1,Math.floor(Math.min(elapsed,total-.001)/sceneDuration)):-1;
+        if(idx!==previousIndex){previousIndex=idx;state.assets.forEach((a,i)=>{if(!a.video)return;if(i===idx){a.element.currentTime=0;a.element.play().catch(()=>{});}else a.element.pause();});}
+        drawFrameOn(out,t);
+        statusLine.textContent=`Rendering video… ${Math.round(t/total*100)}%`;
+        if(elapsed<total){requestAnimationFrame(frame);}else{state.assets.forEach(a=>{if(a.video)a.element.pause();});recorder.stop();}
+      };
+      requestAnimationFrame(frame);
+      await ended;
+      const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'});if(!blob.size)throw new Error('The browser produced an empty file. Try a shorter render or another browser.');
+      const filename=`nova-video-${new Date().toISOString().replace(/[:.]/g,'-')}.webm`;const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+      state.exports.unshift({filename,url,blob,size:blob.size,date:new Date().toLocaleString(),duration:total,ratio});renderExports();statusLine.textContent=`Done — ${filename} was downloaded. Your render is also listed under My exports.`;
+      setTimeout(()=>URL.revokeObjectURL(url),30*60*1000);
+    }catch(error){console.error(error);if(recorder&&recorder.state!=='inactive')recorder.stop();statusLine.textContent=`Export failed: ${error.message||'Unknown error'}. Try Chrome or Edge and a shorter video.`;}
+    finally{if(music){music.audio.pause();music.ac.close().catch(()=>{});URL.revokeObjectURL(music.url);}stream.getTracks().forEach(t=>t.stop());exportButton.disabled=false;exportButton.textContent='✦  Render & export video';drawPreview();}
+  }
+  exportButton.addEventListener('click',exportVideo);
+  function renderExports(){const list=$('#export-list');if(!state.exports.length){list.innerHTML='<div class="panel empty"><div class="empty-icon">▤</div><strong>No exports yet</strong><p class="page-desc">Your completed renders will appear here.</p></div>';return;}list.innerHTML=state.exports.map((item,i)=>`<div class="panel history-card"><div class="history-preview">▶</div><div class="history-details"><strong>${escapeHTML(item.filename)}</strong><p>${escapeHTML(item.date)} · ${item.duration}s · ${item.ratio} · ${(item.size/1024/1024).toFixed(1)} MB</p><small>RENDERED IN YOUR BROWSER</small></div><button class="secondary" data-download="${i}">Download again</button></div>`).join('');list.querySelectorAll('[data-download]').forEach(btn=>btn.addEventListener('click',()=>{const item=state.exports[Number(btn.dataset.download)];const a=document.createElement('a');a.href=URL.createObjectURL(item.blob);a.download=item.filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),30000);}));}
+  document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+btn.dataset.page));if(btn.dataset.page==='assets')renderAssets();}));
+  window.addEventListener('beforeunload',()=>{stopPreview();state.assets.forEach(a=>URL.revokeObjectURL(a.url));});
+})();
+</script>
+</body>
+</html>
